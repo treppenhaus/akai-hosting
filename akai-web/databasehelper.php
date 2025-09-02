@@ -1,6 +1,6 @@
 <?php
 class DatabaseHelper {
-    private $host = '10.0.0.41';
+    private $host = 'localhost';
     private $dbName = 'akai';
     private $username = 'root'; // adjust as needed
     private $password = '';     // adjust as needed

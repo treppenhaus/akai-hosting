@@ -33,7 +33,7 @@ $token = '$2y$10$yumC4x7Y0SpdlUfsCAEeUOrtNqNOkL2qFSkBBJA9Fg4Phm2jaazSW';
 </head>
 <body>
   <div class="container">
-    <header>Server Dashboard (Dark Mode)</header>
+    <header>Server Dashboard</header>
 
     <div class="servers-grid" id="serversContainer">
       Loading server info...

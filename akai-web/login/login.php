@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         // Redirect or success message
-        header('Location: ../dashboard');
+        header('Location: ../dashboard/dash.php');
         exit;
     } else {
         header("Location: ../login?msg=invalid username or password");
