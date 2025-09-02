@@ -1,0 +1,118 @@
+body {
+    margin: 0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #ddd;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  header {
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 1rem 0;
+    text-align: center;
+    color: #81c784; /* pale green accent */
+  }
+  .servers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 1.5rem;
+  }
+  .server-box {
+    background: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.7);
+    padding: 1.5rem;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 3px solid transparent;
+  }
+  .server-box:hover {
+    box-shadow: 0 5px 20px rgb(0 0 0 / 0.9);
+  }
+  /* Borders by status */
+  .server-box {
+    border-color: #777777; /* grey */
+  }
+  .server-box.running {
+    border-color: #81c784; /* pale green */
+  }
+  .server-box h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #a5d6a7;
+    word-break: break-word;
+  }
+  .server-info {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    color: #ccc;
+    line-height: 1.4;
+  }
+  .server-status {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #81c784;
+  }
+  .server-box.stopped .server-status {
+    color: #999;
+  }
+  .buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  button {
+    flex: 1;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    color: #121212;
+    background: #81c784;
+    transition: background-color 0.25s ease;
+  }
+  button:hover {
+    background: #519657;
+  }
+  button.stop-btn {
+    background: #e57373;
+    color: #121212;
+  }
+  button.stop-btn:hover {
+    background: #b23c3c;
+  }
+  a.live-log-link {
+    flex: 1;
+    text-align: center;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    background: #4dd0e1;
+    color: #121212;
+    text-decoration: none;
+    font-weight: 600;
+    line-height: 1.5;
+    transition: background-color 0.25s ease;
+  }
+  a.live-log-link:hover {
+    background: #25828f;
+  }
+  .create-server-button {
+    margin-top: 2rem;
+    width: 100%;
+    padding: 1rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: #388e3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .create-server-button:hover {
+    background: #246828;
+  }

@@ -1,3 +1,3 @@
-akai-panel/testenv/java/*
-akai-panel/testenv/server/*
+akai-backend/testenv/java/*
+akai-backend/testenv/server/*
 */node_modules
