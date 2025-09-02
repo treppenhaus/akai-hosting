@@ -1,4 +1,27 @@
 
+## todos:
+
+create akai-service;
+
+
+akai-panel:
+- hosts a webserver which communicates with the services / e.g the servers
+- does authenticate users
+- create servers (copy from preset)
+- starts / stops the services which start/stop the servers
+
+
+akai-service:
+- is started by the akai-panel
+- starts / stops the server
+
++ why is service needed? cant the panel just directly start the servers?
+  - it's needed, because:
+
+
+how does input/output from panel to server work? because of the services between them.
+---
+
 # Akai Server API Documentation
 
 ## Endpoints
