@@ -1,0 +1,3 @@
+akai-service/testenv/java/*
+akai-service/testenv/server/*
+*/node_modules

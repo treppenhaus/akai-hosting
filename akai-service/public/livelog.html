@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Live Logs</title>
+  <script>
+    let serverID = ""; // initially empty, will be set after fetching
+
+    // Fetch running servers and populate dropdown
+    async function fetchRunningServers() {
+      try {
+        const res = await fetch('/running');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.servers)) {
+          const select = document.getElementById("serverSelect");
+          select.innerHTML = ""; // clear previous options
+
+          data.servers.forEach(server => {
+            const option = document.createElement("option");
+            option.value = server.serverID;
+            option.textContent = `${server.serverID} (PID: ${server.pid})`;
+            select.appendChild(option);
+          });
+
+          if (data.servers.length > 0) {
+            serverID = data.servers[0].serverID;
+            select.value = serverID;
+            joinServerRoom(serverID);
+          }
+        } else {
+          alert("No running servers found.");
+        }
+      } catch (err) {
+        console.error("Failed to fetch running servers:", err);
+      }
+    }
+
+    // Called when dropdown changes
+    function setID() {
+      const select = document.getElementById("serverSelect");
+      serverID = select.value;
+      joinServerRoom(serverID);
+    }
+
+    // Send command to server
+    function sendCommand() {
+      const command = document.getElementById("cmdbox").value;
+      if (!serverID) {
+        alert("Please select a server first.");
+        return;
+      }
+      fetch(`/send/${serverID}/${encodeURIComponent(command)}`);
+    }
+
+    // Join socket.io room for selected server
+    function joinServerRoom(id) {
+      if (window.socket) {
+        window.socket.emit('joinServer', id);
+        // Clear logs when switching servers
+        document.getElementById('log').textContent = '';
+      }
+    }
+
+    window.onload = () => {
+      fetchRunningServers();
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Live Server Logs</h1>
+
+  <label for="serverSelect">Select Server:</label>
+  <select id="serverSelect" onchange="setID()"></select>
+  <br><br>
+
+  <input id="cmdbox" type="text" value="say hello from webpanel!">
+  <button onclick="sendCommand()">Send Command</button>
+  <hr>
+
+  <pre id="log"></pre>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <link rel="stylesheet" href="livelog.css">
+  <script>
+    const socket = io();
+    window.socket = socket;
+
+    socket.on('connect', () => {
+      if (serverID) {
+        socket.emit('joinServer', serverID);
+      }
+    });
+
+    socket.on('logLine', (line) => {
+      const logEl = document.getElementById('log');
+      logEl.textContent += line + '\n';
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+  </script>
+</body>
+
+</html>

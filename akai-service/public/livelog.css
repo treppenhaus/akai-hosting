@@ -1,0 +1,15 @@
+* {
+    background-color: #3d3944;
+    color: #afc3dd;
+}
+
+.top-box {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+input, button {
+    border: 1px solid white;
+    padding: 5px;
+    margin: 3px;
+}

@@ -1,0 +1,12 @@
+{
+    "presets": [
+        {
+            "id": "___cb188",
+            "name": "craftbukkit-1.8.8",
+            "folder": "mc_1.8.8_craftbukkit",
+            "java": "8\\bin\\java.exe",
+            "description": "default test preset fast and easy xx",
+            "added": 1754786646
+        }
+    ]
+}

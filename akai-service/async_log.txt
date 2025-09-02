@@ -1,0 +1,145 @@
+Error: Unable to access jarfile testenv/server/a8d0d369-5822-40d9-a1f5-2af7614168fe/craftbukkit-1.8.8.jar
+Error: Could not create the Java Virtual Machine.
+Error: A fatal exception has occurred. Program will exit.
+Invalid maximum heap size: -Xmx1G 
+Error: Could not create the Java Virtual Machine.
+Error: A fatal exception has occurred. Program will exit.
+Invalid maximum heap size: -Xmx200M 
+Loading libraries, please wait...
+2025-08-10 00:03:55,226 main WARN Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream
+2025-08-10 00:03:55,228 main WARN Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream
+[00:03:55 INFO]: Starting minecraft server version 1.8.8
+[00:03:55 INFO]: Loading properties
+[00:03:55 WARN]: server.properties does not exist
+[00:03:55 INFO]: Generating new properties file
+[00:03:55 INFO]: Default game type: SURVIVAL
+[00:03:55 INFO]: Generating keypair
+[00:03:55 INFO]: Starting Minecraft server on *:25565
+[00:03:55 INFO]: Using default channel type
+[00:03:56 INFO]: This server is running CraftBukkit version git-Bukkit-741a1bd (MC: 1.8.8) (Implementing API version 1.8.8-R0.1-SNAPSHOT)
+[00:03:56 WARN]: Failed to load user banlist: 
+java.io.FileNotFoundException: banned-players.json (Das System kann die angegebene Datei nicht finden)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_202]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_202]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_202]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.JsonList.load(JsonList.java:171) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.z(SourceFile:99) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.<init>(SourceFile:25) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.init(DedicatedServer.java:179) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:504) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_202]
+[00:03:56 WARN]: Failed to load ip banlist: 
+java.io.FileNotFoundException: banned-ips.json (Das System kann die angegebene Datei nicht finden)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_202]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_202]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_202]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.JsonList.load(JsonList.java:171) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.y(SourceFile:91) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.<init>(SourceFile:27) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.init(DedicatedServer.java:179) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:504) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_202]
+[00:03:56 WARN]: Failed to load operators list: 
+java.io.FileNotFoundException: ops.json (Das System kann die angegebene Datei nicht finden)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_202]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_202]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_202]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.JsonList.load(JsonList.java:171) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.A(SourceFile:107) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.<init>(SourceFile:29) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.init(DedicatedServer.java:179) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:504) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_202]
+[00:03:56 WARN]: Failed to load white-list: 
+java.io.FileNotFoundException: whitelist.json (Das System kann die angegebene Datei nicht finden)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_202]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_202]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_202]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.JsonList.load(JsonList.java:171) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.C(SourceFile:123) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.<init>(SourceFile:30) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.init(DedicatedServer.java:179) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:504) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_202]
+[00:03:56 INFO]: Preparing level "world"
+[00:03:56 WARN]: Unable to find spawn biome
+[00:03:56 INFO]: Preparing start region for level 0 (Seed: 5792338250661360787)
+[00:03:57 INFO]: Preparing spawn area: 29%
+[00:03:58 INFO]: Preparing spawn area: 79%
+[00:03:59 INFO]: Preparing start region for level 1 (Seed: 5792338250661360787)
+[00:04:00 INFO]: Preparing spawn area: 50%
+[00:04:01 INFO]: Preparing start region for level 2 (Seed: 5792338250661360787)
+[00:04:02 INFO]: Done (5,953s)! For help, type "help" or "?"
+Loading libraries, please wait...
+2025-08-10 00:07:21,356 main WARN Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream
+2025-08-10 00:07:21,358 main WARN Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream
+[00:07:21 INFO]: Starting minecraft server version 1.8.8
+[00:07:21 INFO]: Loading properties
+[00:07:21 WARN]: server.properties does not exist
+[00:07:21 INFO]: Generating new properties file
+[00:07:22 INFO]: Default game type: SURVIVAL
+[00:07:22 INFO]: Generating keypair
+[00:07:22 INFO]: Starting Minecraft server on *:25565
+[00:07:22 INFO]: Using default channel type
+[00:07:22 INFO]: This server is running CraftBukkit version git-Bukkit-741a1bd (MC: 1.8.8) (Implementing API version 1.8.8-R0.1-SNAPSHOT)
+[00:07:22 WARN]: Failed to load user banlist: 
+java.io.FileNotFoundException: banned-players.json (Das System kann die angegebene Datei nicht finden)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_202]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_202]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_202]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.JsonList.load(JsonList.java:171) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.z(SourceFile:99) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.<init>(SourceFile:25) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.init(DedicatedServer.java:179) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:504) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_202]
+[00:07:22 WARN]: Failed to load ip banlist: 
+java.io.FileNotFoundException: banned-ips.json (Das System kann die angegebene Datei nicht finden)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_202]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_202]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_202]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.JsonList.load(JsonList.java:171) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.y(SourceFile:91) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.<init>(SourceFile:27) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.init(DedicatedServer.java:179) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:504) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_202]
+[00:07:22 WARN]: Failed to load operators list: 
+java.io.FileNotFoundException: ops.json (Das System kann die angegebene Datei nicht finden)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_202]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_202]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_202]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.JsonList.load(JsonList.java:171) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.A(SourceFile:107) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.<init>(SourceFile:29) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.init(DedicatedServer.java:179) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:504) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_202]
+[00:07:22 WARN]: Failed to load white-list: 
+java.io.FileNotFoundException: whitelist.json (Das System kann die angegebene Datei nicht finden)
+	at java.io.FileInputStream.open0(Native Method) ~[?:1.8.0_202]
+	at java.io.FileInputStream.open(FileInputStream.java:195) ~[?:1.8.0_202]
+	at java.io.FileInputStream.<init>(FileInputStream.java:138) ~[?:1.8.0_202]
+	at com.google.common.io.Files.newReader(Files.java:86) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.JsonList.load(JsonList.java:171) ~[craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.C(SourceFile:123) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedPlayerList.<init>(SourceFile:30) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.DedicatedServer.init(DedicatedServer.java:179) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at net.minecraft.server.v1_8_R3.MinecraftServer.run(MinecraftServer.java:504) [craftbukkit-1.8.8.jar:git-Bukkit-741a1bd]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_202]
+[00:07:22 INFO]: Preparing level "world"
+[00:07:23 INFO]: Preparing start region for level 0 (Seed: 524160240895220429)
+[00:07:24 INFO]: Preparing spawn area: 38%
+[00:07:25 INFO]: Preparing spawn area: 94%
+[00:07:25 INFO]: Preparing start region for level 1 (Seed: 524160240895220429)
+[00:07:26 INFO]: Preparing spawn area: 48%
+[00:07:27 INFO]: Preparing spawn area: 90%
+[00:07:27 INFO]: Preparing start region for level 2 (Seed: 524160240895220429)
+[00:07:28 INFO]: Done (5,863s)! For help, type "help" or "?"
