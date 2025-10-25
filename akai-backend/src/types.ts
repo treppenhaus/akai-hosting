@@ -24,3 +24,10 @@ export interface ServerInfo {
   status: string;
   nickname: string;
 }
+
+export interface ExcessiveServerInfo {
+  info: ServerInfo
+  preset: Preset
+  creator: User
+  running: boolean
+}

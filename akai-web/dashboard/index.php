@@ -11,21 +11,8 @@ $token = '$2y$10$yumC4x7Y0SpdlUfsCAEeUOrtNqNOkL2qFSkBBJA9Fg4Phm2jaazSW';
 <title>Dark Mode Server Dashboard</title>
 <script>
   const token = "<?php echo $token; ?>";
-  
-    function startServer(uuid) {
-        fetch(`http://localhost:3000/start/${uuid}?token=${encodeURIComponent(token)}`)
-          .then(res => res.json())
-          .then(data => alert(data.message))
-          .catch(() => alert('Failed to start server'));
-      }
-
-      function stopServer(uuid) {
-        fetch(`http://localhost:3000/stop/${uuid}?token=${encodeURIComponent(token)}`)
-          .then(res => res.json())
-          .then(data => alert(data.message))
-          .catch(() => alert('Failed to stop server'));
-      }
 </script>
+<script src="link.js"></script>
 <style>
   
 </style>
@@ -33,7 +20,9 @@ $token = '$2y$10$yumC4x7Y0SpdlUfsCAEeUOrtNqNOkL2qFSkBBJA9Fg4Phm2jaazSW';
 </head>
 <body>
   <div class="container">
-    <header>Server Dashboard</header>
+    <div class="header">
+      server dashboard
+    </div>
 
     <div class="servers-grid" id="serversContainer">
       Loading server info...

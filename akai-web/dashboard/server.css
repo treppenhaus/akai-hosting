@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    max-width: 650px;
+    margin: 60px auto;
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+    color: #222;
+}
+
+.server-id {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+    color: #fff;
+}
+
+.start-btn {
+    background-color: #28a745;
+}
+.start-btn:hover {
+    background-color: #218838;
+}
+
+.stop-btn {
+    background-color: #dc3545;
+}
+.stop-btn:hover {
+    background-color: #b52a38;
+}
+
+.console-btn {
+    background-color: #6c757d;
+}
+.console-btn:hover {
+    background-color: #5a6268;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.label {
+    font-weight: bold;
+    color: #555;
+}
+
+.value {
+    color: #111;
+}
+
+a {
+    display: inline-block;
+    margin-top: 25px;
+    text-decoration: none;
+    background: #007BFF;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: 0.2s ease;
+}
+
+a:hover {
+    background: #0056b3;
+}

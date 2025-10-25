@@ -5,6 +5,7 @@ import { Server as SocketIOServer } from 'socket.io';
 import http from 'http';
 import { AkaiServerController } from './AkaiServerController';
 import cors from 'cors';
+import { ExcessiveServerInfo } from "./types";
 
 const HEALTH_CHECK_INTERVAL = 10000; // every 10 seconds
 
@@ -44,27 +45,30 @@ app.use(cors({
 }));
 
 app.get("/create", async (req, res) => {
-  const { presetID, token } = req.query;
+  const { presetID, token, name } = req.query;
 
   // Basic validation
   if (
     typeof presetID !== "string" ||
     typeof token !== "string" ||
+    typeof name !== "string" ||
     presetID.length === 0 ||
     token.length === 0 ||
+    name.length === 0 ||
     presetID.length > 200 ||
-    token.length > 200
+    token.length > 200 ||
+    name.length > 200
   ) {
     return res.status(400).json({
       success: false,
-      message: "Invalid or missing 'presetID' and/or 'token'. Both must be provided."
+      message: "Invalid or missing 'presetID', 'token', or 'name'. All must be provided."
     });
   }
 
   try {
-    const uuid = await controller.createServer(presetID, token, "new server hi");
+    const uuid = await controller.createServer(presetID, token, name);
     if (uuid) {
-      res.json({ success: true, message: "Created testserver", serverID: uuid });
+      res.json({ success: true, message: "Created server successfully", serverID: uuid });
     } else {
       res.status(500).json({ success: false, message: "Error creating server." });
     }
@@ -73,6 +77,7 @@ app.get("/create", async (req, res) => {
     res.status(500).json({ success: false, message: "Server error during creation." });
   }
 });
+
 
 app.get('/start/:id', async (req, res) => {
   const id = req.params.id;
@@ -118,12 +123,39 @@ app.get('/send/:id/:input', async (req, res) => {
 
 app.get('/serverinfo/:id', async (req, res) => {
   const { id } = req.params;
-  controller.getServerById(id).then(server => {
-    res.json(server);
-    console.log(server);
-  })
-  // todo: check for per,ms
-  // {"id":8,"uuid":"4ce69660-91e1-4550-aa6c-ac7d5cf9b46a","owner":1,"created":"1754792696759","template":"___cb188","port":25565}
+
+  try {
+    const server = await controller.getServerById(id);
+    if (!server) {
+      return res.status(404).json({ success: false, message: "Server not found" });
+    }
+
+    // Fetch the preset
+    const presets = await controller.getAllPresets();
+    const preset = presets.find(p => p.id === server.template) || null;
+
+    const creator = null; // todo: get from db
+
+    const info: ExcessiveServerInfo = {
+      info: server,
+      preset: preset || {
+        id: server.template,
+        name: "Unknown Preset",
+        folder: "",
+        java: "",
+        added: 0,
+        description: ""
+      },
+      creator: creator || { id: 0, username: "Unknown", created_at: new Date(0) },
+      running: controller.isServerRunning(server.uuid)
+    };
+
+    res.json({ success: true, data: info });
+
+  } catch (error) {
+    console.error("Error fetching server info:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
 });
 
 app.get('/running', (req, res) => {
@@ -148,6 +180,11 @@ app.get('/myservers', async (req, res) => {
     console.error("Error fetching user's servers:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
+});
+
+app.get('/presets', async (req, res) => {
+  const presets = await controller.getAllPresets();
+  res.json({ success: true, presets });
 });
 
 startHealthMonitor();
@@ -179,8 +216,6 @@ async function startHealthMonitor() {
 
           // Stop it in memory
           controller.forceRemoveServer(srv.serverID);
-
-          // Update DB
           await db.updateServerStatus(srv.serverID, 'stopped');
 
           // Optionally notify connected sockets

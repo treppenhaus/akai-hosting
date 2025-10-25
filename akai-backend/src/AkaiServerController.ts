@@ -7,6 +7,9 @@ import { AkaiDatabaseClient } from './AkaiDatabaseClient';
 import { PresetLoader } from './PresetLoader';
 import path from 'path';
 import { ServerInfo } from './types';
+const PropertiesReader = require('properties-reader');
+const PORT_RANGE_MIN = 25600;
+const PORT_RANGE_MAX = 25999;
 
 export class AkaiServerController {
     private runningServers = new Map<string, ChildProcess>();
@@ -126,14 +129,31 @@ export class AkaiServerController {
             return false;
         }
 
+
+        this.db.setServerStatus(serverID, "starting");
         const serverhome = `testenv/server/${serverID}`;
+
+
+        let port: number | null = await this.getFreePort();
+        if (port == null) {
+            console.log(`Server ${serverID} found no valid port`);
+            return false;
+        }
+
+
+        // set the port
+        this.db.updateServerPort(serverID, port)
+        const properties = PropertiesReader(`${serverhome}/server.properties`);
+        properties.set("server-port", port);
+        properties.save(`${serverhome}/server.properties`);
+
 
         console.log(serverhome);
         const child = spawn(`..\\..\\java\\${preset.java}`, ["-jar", `craftbukkit-1.8.8.jar`], {
             cwd: serverhome,
         });
 
-        console.log("starting: " + serverID);
+        console.log(`starting ${serverID} on port: ${port}`);
 
         const stdoutRL = readline.createInterface({ input: child.stdout });
         stdoutRL.on('line', (line: string) => {
@@ -153,6 +173,28 @@ export class AkaiServerController {
         this.runningServers.set(serverID, child);
         this.db.setServerStatus(serverID, "running");
     }
+
+    getFreePort = async (): Promise<number | null> => {
+        const usedPorts = new Set<number>();
+
+        // Get all used ports from DB
+        const servers = await this.db.getAllServers();
+        servers.forEach(server => {
+            if (server.port) usedPorts.add(server.port);
+        });
+
+        const maxAttempts = 1000; // avoid infinite loops
+
+        for (let i = 0; i < maxAttempts; i++) {
+            const port = Math.floor(Math.random() * (PORT_RANGE_MAX - PORT_RANGE_MIN + 1)) + PORT_RANGE_MIN;
+            if (!usedPorts.has(port)) {
+                // Optionally: check if the port is actually free on the system
+                return port;
+            }
+        }
+
+        return null;
+    };
 
     async sendInputToServer(serverID: string, input: string): Promise<boolean> {
         const child = this.runningServers.get(serverID);
@@ -208,6 +250,10 @@ export class AkaiServerController {
 
     forceRemoveServer(id: string) {
         this.runningServers.delete(id);
+    }
+
+    async getAllPresets(): Promise<any[]> {
+        return this.presetLoader.getAllPresets();
     }
 }
 

@@ -77,7 +77,7 @@ export class AkaiDatabaseClient {
   async addServer(server: Omit<ServerInfo, 'id'>): Promise<number> {
     const sql = `
       INSERT INTO serverinfo (uuid, owner, created, template, port, nickname)
-      VALUES (?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?)
     `;
 
     const [result] = await this.pool.execute<ResultSetHeader>(sql, [
@@ -85,7 +85,8 @@ export class AkaiDatabaseClient {
       server.owner,
       server.created,
       server.template,
-      server.port
+      server.port,
+      server.nickname
     ]);
 
     return result.insertId; // auto-increment ID
@@ -103,7 +104,12 @@ export class AkaiDatabaseClient {
   }
 
   async updateServerStatus(id: string, status: string) {
-    const query = 'UPDATE servers SET status = ? WHERE id = ?';
+    const query = 'UPDATE serverinfo SET status = ? WHERE id = ?';
     await this.pool.query(query, [status, id]);
+  }
+
+  async updateServerPort(serverid: string, port: number) {
+    const query = 'UPDATE serverinfo SET port = ? WHERE uuid = ?';
+    await this.pool.query(query, [port, serverid]);
   }
 }

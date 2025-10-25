@@ -26,17 +26,21 @@ export class PresetLoader {
     }
   }
 
-  async presetExists (presetID: string): Promise<boolean | undefined> {
+  async presetExists(presetID: string): Promise<boolean | undefined> {
     const preset = await this.getPresetById(presetID);
-    if(preset) return true;
+    if (preset) return true;
     else {
-        console.log("preset not found: " + presetID);
-        return false;
+      console.log("preset not found: " + presetID);
+      return false;
     }
-}
-  
+  }
+
   async getPresetById(id: string): Promise<Preset | undefined> {
     const presets = await this.loadPresets();
     return presets.find(preset => preset.id === id);
+  }
+
+  async getAllPresets(): Promise<Preset[]> {
+    return await this.loadPresets();
   }
 }

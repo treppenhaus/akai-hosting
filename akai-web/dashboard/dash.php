@@ -1,97 +1,76 @@
 <?php
-    session_start();
-    $token = '$2y$10$yumC4x7Y0SpdlUfsCAEeUOrtNqNOkL2qFSkBBJA9Fg4Phm2jaazSW';
+session_start();
+$token = '$2y$10$yumC4x7Y0SpdlUfsCAEeUOrtNqNOkL2qFSkBBJA9Fg4Phm2jaazSW';
 ?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cool panel bro</title>
-    <link rel="stylesheet" href="dashboard2.css">
+    <title>Server Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
     <script>
         const token = "<?php echo $token; ?>";
-        const container = document.getElementById('container');
 
-        addServer = (uuid, status, template, consoleLink) => {
-            console.log("adding server.")
-            document.getElementById("servers").innerHTML += `<div class="server-container">
-                    <div class="server-container-grid">
-                        <div class="left">
-                            <h2>unnamed server</h2>
-                            <p>ID: ${uuid}</p>
-                            <p>Status: ${status}</p>
-                            <p>Type: ${template}</p>
-                            <a href="${consoleLink}">open console</a>
+        function addServer(uuid, status, template, consoleLink) {
+            const serversContainer = document.getElementById('servers');
+            const serverHTML = `
+                <div class="server-card">
+                    <div class="server-header">
+                        <div>
+                            <h2>Server ${uuid.substring(0, 6)}...</h2>
+                            <p class="server-status ${status.toLowerCase()}">${status}</p>
                         </div>
-                        <div class="right">
-                            <img src="more.png" alt="more" onclick="alert('not implemented yet.')">
-                        </div>
+                        <a class="console-link" href="${consoleLink}" target="_blank">Open Console</a>
                     </div>
-                    <div class="server-buttons-grid">
-                        <div class="start-button" onclick="startServer('${uuid}')">Start</div>
-                        <div class="start-button" onclick="stopServer('${uuid}')">Stop</div>
-                        <div class="start-button" onclick="restartServer('${uuid}')">Restart</div>
+                    <div class="server-details">
+                        <p><b>UUID:</b> ${uuid}</p>
+                        <p><b>Template:</b> ${template}</p>
                     </div>
-                </div>
-            `;
+                    <div class="server-actions">
+                        <button class="btn start-btn" onclick="startServer('${uuid}', () => alert('starting'), () => alert('could not start!'))">Start</button>
+                        <button class="btn stop-btn" onclick="stopServer('${uuid}', () => alert('stopping'), () => alert('could not stop!'))">Stop</button>
+                        <!-- <button class="btn restart-btn" onclick="restartServer('${uuid}')">Restart</button> -->
+                        <a href="server.php?id=${uuid}" class="btn info-btn">View Info</a>
+                    </div>
+                </div>`;
+            serversContainer.insertAdjacentHTML('beforeend', serverHTML);
+
+            
         }
-
-        fetchServers = async() => {
-            if (!token) {
-                container.textContent = "No user token found.";
-                return;
-            }
-
-            try {
-                const res = await fetch(`http://localhost:3000/myservers?token=${encodeURIComponent(token)}`);
-                const data = await res.json();
-                if (!data.success) {
-                    container.textContent = "Failed to fetch servers.";
-                    return;
-                }
-                const servers = data.servers;
-                if (servers.length === 0) {
-                    container.textContent = "No servers found.";
-                    return;
-                }
-                console.log(servers);
-                servers
-                    .sort((a, b) => (b.status === "running") - (a.status === "running"))
-                    .forEach(server => {
-                        console.log("adding: " + server.uuid);
-                        addServer(server.uuid, server.status, server.template, "https://google.com/")
-                    });
-            }
-            catch(e) {}
-        }
-
     </script>
+    <script src="api.js"></script>
 </head>
 
 <body>
-    <div class="content">
-        <div class="header">
-            <h1>server management panel</h1>
-        </div>
+    <div class="container">
+        <header>
+            <h1>Server Dashboard</h1>
+            <button class="btn create-btn" onclick="window.location.replace('create.php')">Create Server</button>
+        </header>
 
-        <div class="body" id="container">
-            <div class="servers" id="servers">
+        <main id="servers" class="servers-list">
+            <!-- Servers will load here -->
+        </main>
 
-                <!--
-                
-                -->
-
-
-            </div>
-
-        </div>
-        <div class="footer">
-
-        </div>
+        <footer>
+            <p>cool panel bro © 2025</p>
+        </footer>
     </div>
-    </div>
+
+    <script>
+        let update = () => {
+            fetchServers(addServer);
+
+            setTimeout(() => {
+                const serversContainer = document.getElementById('servers');
+                serversContainer.insertAdjacentHTML('beforeend', "");
+                update();
+            }, 3000);
+        }
+        update();
+    </script>
 </body>
 
-<script>fetchServers()</script>
 </html>
