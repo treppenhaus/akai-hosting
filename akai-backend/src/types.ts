@@ -22,4 +22,5 @@ export interface ServerInfo {
   template: string;
   port: number | null;
   status: string;
+  nickname: string;
 }

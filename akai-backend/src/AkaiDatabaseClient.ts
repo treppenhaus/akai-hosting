@@ -54,21 +54,21 @@ export class AkaiDatabaseClient {
 
   // Get all servers
   async getAllServers(): Promise<ServerInfo[]> {
-    const sql = `SELECT id, uuid, owner, created, template, port, status FROM serverinfo`;
+    const sql = `SELECT id, uuid, owner, created, template, port, status, nickname FROM serverinfo`;
     const [rows] = await this.pool.execute<RowDataPacket[]>(sql);
     return rows as ServerInfo[];
   }
 
   // Get all servers for a specific user ID
   async getServersByUserId(userId: number): Promise<ServerInfo[]> {
-    const sql = `SELECT id, uuid, owner, created, template, port, status FROM serverinfo WHERE owner = ?`;
+    const sql = `SELECT id, uuid, owner, created, template, port, status, nickname FROM serverinfo WHERE owner = ?`;
     const [rows] = await this.pool.execute<RowDataPacket[]>(sql, [userId]);
     return rows as ServerInfo[];
   }
 
   // Get server info by UUID
   async getServerInfoByUuid(uuid: string): Promise<ServerInfo | null> {
-    const sql = `SELECT id, uuid, owner, created, template, port FROM serverinfo WHERE uuid = ? LIMIT 1`;
+    const sql = `SELECT id, uuid, owner, created, template, port, nickname FROM serverinfo WHERE uuid = ? LIMIT 1`;
     const [rows] = await this.pool.execute<RowDataPacket[]>(sql, [uuid]);
     if (rows.length === 0) return null;
     return rows[0] as ServerInfo;
@@ -76,7 +76,7 @@ export class AkaiDatabaseClient {
 
   async addServer(server: Omit<ServerInfo, 'id'>): Promise<number> {
     const sql = `
-      INSERT INTO serverinfo (uuid, owner, created, template, port)
+      INSERT INTO serverinfo (uuid, owner, created, template, port, nickname)
       VALUES (?, ?, ?, ?, ?)
     `;
 
@@ -100,5 +100,10 @@ export class AkaiDatabaseClient {
   // Graceful shutdown
   async close(): Promise<void> {
     await this.pool.end();
+  }
+
+  async updateServerStatus(id: string, status: string) {
+    const query = 'UPDATE servers SET status = ? WHERE id = ?';
+    await this.pool.query(query, [status, id]);
   }
 }

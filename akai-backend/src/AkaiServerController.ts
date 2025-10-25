@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AkaiDatabaseClient } from './AkaiDatabaseClient';
 import { PresetLoader } from './PresetLoader';
 import path from 'path';
+import { ServerInfo } from './types';
 
 export class AkaiServerController {
     private runningServers = new Map<string, ChildProcess>();
@@ -66,7 +67,7 @@ export class AkaiServerController {
         return true;
     }
 
-    async createServer(presetID: string, token: string): Promise<string | undefined> {
+    async createServer(presetID: string, token: string, nickname: string): Promise<string | undefined> {
         if (!this.presetLoader.presetExists(presetID)) return;
 
         const user = await this.db.getUserByToken(token);
@@ -93,7 +94,8 @@ export class AkaiServerController {
                 created: Date.now(),
                 template: presetID,
                 port: 25565,
-                status: "stopped"
+                status: "stopped",
+                nickname: nickname
             });
             return newServerID;
         } catch (err) {
@@ -102,7 +104,7 @@ export class AkaiServerController {
         }
     }
 
-    async serverExists (serverID: string): Promise<boolean> {
+    async serverExists(serverID: string): Promise<boolean> {
         return ((await this.db.getServerInfoByUuid(serverID)) != null);
     }
 
@@ -114,7 +116,7 @@ export class AkaiServerController {
             return;
         }
         let preset = await this.presetLoader.getPresetById(serverInfo.template);
-        if(preset == undefined) {
+        if (preset == undefined) {
             console.log("preset was not found, java can not be started.")
             return;
         }
@@ -171,14 +173,14 @@ export class AkaiServerController {
     async isPermitted(serverID: string, token: string): Promise<boolean> {
         const user = await this.db.getUserByToken(token);
         if (!user) return false;
-      
+
         const serverInfo = await this.db.getServerInfoByUuid(serverID);
         if (!serverInfo) return false;
-      
+
         // todo: in the future, add moderators which are other users but they can also manage your server;
         // todo: in the FAR future, implement a permission system so you can manage which moderator can manage which part of a server (can only start/stop, can edit settings, etc.)
         return serverInfo.owner === user.id;
-      }
+    }
 
     getRunningServers() {
         return Array.from(this.runningServers.entries()).map(([serverID, child]) => ({
@@ -187,4 +189,25 @@ export class AkaiServerController {
             connected: !child.killed,
         }));
     }
+
+    getServerById = (id: string): Promise<ServerInfo | null> => {
+        return this.db.getServerInfoByUuid(id);
+    }
+
+    isServerProcessAlive(id: string): boolean {
+        const srv = this.runningServers.get(id);
+        if (!srv || typeof srv.pid !== "number") return false; // ensure pid exists
+
+        try {
+            process.kill(srv.pid, 0); // check if process exists (throws if not)
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    forceRemoveServer(id: string) {
+        this.runningServers.delete(id);
+    }
 }
+

@@ -6,6 +6,8 @@ import http from 'http';
 import { AkaiServerController } from './AkaiServerController';
 import cors from 'cors';
 
+const HEALTH_CHECK_INTERVAL = 10000; // every 10 seconds
+
 const app = express();
 const server = http.createServer(app);
 const io = new SocketIOServer(server);
@@ -60,7 +62,7 @@ app.get("/create", async (req, res) => {
   }
 
   try {
-    const uuid = await controller.createServer(presetID, token);
+    const uuid = await controller.createServer(presetID, token, "new server hi");
     if (uuid) {
       res.json({ success: true, message: "Created testserver", serverID: uuid });
     } else {
@@ -114,6 +116,16 @@ app.get('/send/:id/:input', async (req, res) => {
   }
 });
 
+app.get('/serverinfo/:id', async (req, res) => {
+  const { id } = req.params;
+  controller.getServerById(id).then(server => {
+    res.json(server);
+    console.log(server);
+  })
+  // todo: check for per,ms
+  // {"id":8,"uuid":"4ce69660-91e1-4550-aa6c-ac7d5cf9b46a","owner":1,"created":"1754792696759","template":"___cb188","port":25565}
+});
+
 app.get('/running', (req, res) => {
   res.json({ success: true, servers: controller.getRunningServers() });
 });
@@ -138,6 +150,45 @@ app.get('/myservers', async (req, res) => {
   }
 });
 
+startHealthMonitor();
 server.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
+
+
+
+
+
+
+
+
+
+async function startHealthMonitor() {
+  console.log(`[Monitor] Health check started. Interval: ${HEALTH_CHECK_INTERVAL / 1000}s`);
+
+  setInterval(async () => {
+    try {
+      const runningServers = controller.getRunningServers();
+      if (!runningServers || runningServers.length === 0) return;
+
+      for (const srv of runningServers) {
+        const isAlive = await controller.isServerProcessAlive(srv.serverID);
+
+        if (!isAlive) {
+          console.log(`[Monitor] Detected stopped server: ${srv.serverID}. Cleaning up...`);
+
+          // Stop it in memory
+          controller.forceRemoveServer(srv.serverID);
+
+          // Update DB
+          await db.updateServerStatus(srv.serverID, 'stopped');
+
+          // Optionally notify connected sockets
+          io.to(srv.serverID).emit('serverStopped', { id: srv.serverID });
+        }
+      }
+    } catch (err) {
+      console.error("[Monitor] Health check error:", err);
+    }
+  }, HEALTH_CHECK_INTERVAL);
+}
